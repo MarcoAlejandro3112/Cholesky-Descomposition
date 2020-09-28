@@ -13,13 +13,8 @@ function creaMatriz() {
 		alert("El valor ingresado no es valido (Mayor a 10 o Menor a 4)");
 	}
 	else{
-		if(t <= 5){
-			var maximo = 100; //Máximo de rango
-			var minimo = 1; //Minimo de rango
-		} else {
-			var maximo = 20; 
-			var minimo = 1;
-		}
+		var maximo = 100; //Máximo de rango
+		var minimo = 1; //Minimo de rango
 		while (dete < 0){
 			var arreglo = new Array((t*(parseInt(t)+1))/2);
 			for (var i = 0; i < (t*(parseInt(t)+1))/2; ++i){
