@@ -1,17 +1,32 @@
 alert("Los valores están truncados a 2 decimales, para ver los valores originales revise la consola")
+function init(){
+	let box_matriz = document.getElementById("caja_matriz");
+	while (box_matriz.firstChild) {
+   		box_matriz.removeChild(box_matriz.lastChild);
+  	}
+	creaMatriz();
+}
 function creaMatriz() {
-	var maximo = 100; //Máximo de rango
-	var minimo = 1; //Minimo de rango
 	var t = document.getElementById("numero_filas_columnas").value;
 	var dete = -1;
 	if (t < 4 || t > 10){
 		alert("El valor ingresado no es valido (Mayor a 10 o Menor a 4)");
 	}
 	else{
+		if(t <= 5){
+			var maximo = 100; //Máximo de rango
+			var minimo = 1; //Minimo de rango
+		} else {
+			var maximo = 20; 
+			var minimo = 1;
+		}
 		while (dete < 0){
 			var arreglo = new Array((t*(parseInt(t)+1))/2);
 			for (var i = 0; i < (t*(parseInt(t)+1))/2; ++i){
 				arreglo[i] = Math.floor((Math.random() * (maximo - minimo + 1)) +  minimo);
+				if(arreglo[i] == 0){
+					arreglo[i] = 1;
+				}
 			}
 			var matriz = [];
 			for (var i = 0; i < t; ++i){
@@ -27,7 +42,11 @@ function creaMatriz() {
 			}
 			dete = determinante(matriz);
 		}
-		if (!Cholesky(matriz, t)) creaMatriz();
+		if(t <= 5){
+			if (!Cholesky(matriz, t)) creaMatriz()
+		} else {
+			Cholesky(matriz,t)
+		}
 	}
 }
 function createMatriz(t){
@@ -80,7 +99,6 @@ var definida = true;
 					sum += Math.pow(lower[j][k], 2);
 				}
 				if (matriz[j][j] - sum < 0){
-					//alert("Matriz no definida positvamente");
 					definida = false;
 				}
 				else lower[j][j] = Math.sqrt(matriz[j][j] - sum);
@@ -94,13 +112,12 @@ var definida = true;
 	}
 
 	if (definida){
-
+		imprimir_matriz(matriz)
 		for (var i = 0; i < n; ++i){
 			for(var j = 0; j < n; ++j){
 				if (isNaN(lower[i][j])) lower[i][j] = 0;
 			}
 		}
-		imprimir_matriz(matriz);
 		let box_matriz = document.getElementById("caja_matriz");
 		let caja_igual = document.createElement("div")
 		let caja_multiplicacion = document.createElement("div")
@@ -114,7 +131,11 @@ var definida = true;
 		imprimir_matriz(transpose(lower))
 		return true;
 	} else{
-		//console.log("La matriz no es definida positvamente");
+
+		if(n > 5) {
+			alert("La matriz no es definida positvamente");	
+			imprimir_matriz(matriz)
+		}
 		return false;
 	}
 }
