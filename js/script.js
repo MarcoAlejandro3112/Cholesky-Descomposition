@@ -35,7 +35,7 @@ function creaMatriz(c = 0) {
 				contador++;
 			}
 		}
-		if (recursividad < 30000){
+		if (recursividad < 25000){
 			if (!Cholesky(matriz, t)){
 				creaMatriz(recursividad);
 			}
