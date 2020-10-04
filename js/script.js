@@ -1,4 +1,54 @@
 alert("Los valores están redondeados a 2 decimales")
+let nIngresado
+let matrizIngresado
+function insertAfter(newNode, existingNode) {
+    existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+}
+function AlertaMatriz(){
+	document.getElementById("Ingresada").style.visibility='visible' 
+	nIngresado = prompt("Ingresar el tamaño de la matriz a ingresar")
+	let tabla   = document.createElement("table")
+  	let tblBody = document.createElement("tbody")
+  	for (let i = 0; i < nIngresado; i++) {
+  	  let tr = document.createElement("tr")
+  	  for (let j = 0; j < nIngresado; j++) {
+		let celda = document.createElement("td")
+  	    tr.appendChild(celda)
+  	  	if (j >= i){
+  	  		let input = document.createElement("input")
+  	  		input.setAttribute("type", "number")
+  	  		input.id = "celda" + i + "." + j
+  	  		celda.appendChild(input)
+  	  	}
+  	  }
+  	  tblBody.appendChild(tr)
+  	}
+  	tabla.appendChild(tblBody)
+  	tabla.setAttribute("border", "2")
+  	document.getElementById("Ingresada").appendChild(tabla)
+}
+function registrar(){
+	document.getElementById("Ingresada").style.visibility='hidden'
+	matrizIngresado = new Array(nIngresado)
+	for (let i = 0; i < nIngresado; ++i){
+		for (let j = 0; j < nIngresado; ++j){
+			matrizIngresado[i] = new Array(nIngresado)
+		}
+	}
+	let valor
+	for (let i = 0; i < nIngresado; ++i){
+		for (let j = 0; j < nIngresado; ++j){
+			if (j >= i){
+				valor = document.getElementById("celda" + i + "." + j).value
+				matrizIngresado[i][j] = valor
+				matrizIngresado[j][i] = valor
+			}
+		}
+	}
+	console.log(matrizIngresado)
+	console.log(nIngresado)
+	if (!Cholesky(matrizIngresado, nIngresado)) alert("No es matriz definida")
+}
 function init(){
 	let box_matriz = document.getElementById("caja_matriz");
 	while (box_matriz.firstChild) {
@@ -122,8 +172,7 @@ function imprimir_matriz(mat){
 			div_row.append(new_div);
 		}
 		box_matriz.append(div_row)
-	}
-	
+	}	
 }
 function transpose(matriz) {
  return matriz[0].map(
